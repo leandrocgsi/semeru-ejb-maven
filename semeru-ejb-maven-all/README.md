@@ -1,11 +1,11 @@
 ejb-example: Example Using Multiple Java EE 6 Technologies Deployed as an EAR
 ==============================================================================================
-Author: Pete Muir
+Author: Leandro da Costa Gonçalves
 Level: Intermediate
 Technologies: EAR
-Summary: Based on kitchensink, but deployed as an EAR
+Summary: Based on JBoss-EAP-Quickstart archetypes.
 Target Product: EAP
-Source: <https://github.com/jboss-jdf/jboss-as-quickstart/>
+Source: <https://github.com/jboss-developer/jboss-eap-quickstarts/>
 
 What is it?
 -----------
