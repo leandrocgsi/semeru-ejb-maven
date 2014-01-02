@@ -11,10 +11,6 @@ import javax.inject.Named;
 import br.com.semeru.model.Member;
 import br.com.semeru.service.MemberRegistration;
 
-// The @Model stereotype is a convenience mechanism to make this a request-scoped bean that has an
-// EL name
-// Read more about the @Model stereotype in this FAQ:
-// http://sfwk.org/Documentation/WhatIsThePurposeOfTheModelAnnotation
 @Model
 public class MemberController {
 
@@ -51,10 +47,8 @@ public class MemberController {
     }
 
     private String getRootErrorMessage(Exception e) {
-        // Default to general error message that registration failed.
         String errorMessage = "Registration failed. See server log for more information";
         if (e == null) {
-            // This shouldn't happen, but return the default messages
             return errorMessage;
         }
 

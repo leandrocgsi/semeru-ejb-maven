@@ -20,8 +20,8 @@ import javax.persistence.PersistenceContext;
  * </pre>
  */
 public class Resources {
-    // use @SuppressWarnings to tell IDE to ignore warnings about field not being referenced directly
-    @Produces
+
+	@Produces
     @PersistenceContext
     private EntityManager em;
 
