@@ -79,6 +79,15 @@
             <artifactId>arquillian-protocol-servlet</artifactId>
             <scope>test</scope>               
         </dependency>
+        
+        <!-- MY ADDED DEPENDENCIES -->
+        <dependency>
+			<groupId>jasperreports</groupId>
+			<artifactId>jasperreports</artifactId>
+			<version>3.5.3</version>
+		</dependency>
+            
+        <!-- MY ADDED DEPENDENCIES -->
 
     </dependencies>
 

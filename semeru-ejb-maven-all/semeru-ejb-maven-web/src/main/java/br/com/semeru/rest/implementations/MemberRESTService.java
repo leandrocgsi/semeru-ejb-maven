@@ -1,4 +1,4 @@
-package br.com.semeru.rest;
+package br.com.semeru.rest.implementations;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -7,31 +7,24 @@ import java.util.Map;
 import java.util.Set;
 import java.util.logging.Logger;
 
-import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.persistence.NoResultException;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 import javax.validation.ValidationException;
 import javax.validation.Validator;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
 import javax.ws.rs.WebApplicationException;
-import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import br.com.semeru.data.MemberRepository;
 import br.com.semeru.model.Member;
+import br.com.semeru.rest.interfaces.IMemberRESTService;
 import br.com.semeru.service.MemberRegistration;
 
-@Path("/members")
-@RequestScoped
-public class MemberResourceRESTService {
-    @Inject
+public class MemberRESTService implements IMemberRESTService{
+    
+	@Inject
     private Logger log;
 
     @Inject
@@ -43,15 +36,12 @@ public class MemberResourceRESTService {
     @Inject
     MemberRegistration registration;
 
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
+	@Override
     public List<Member> listAllMembers() {
         return repository.findAllOrderedByName();
     }
 
-    @GET
-    @Path("/{id:[0-9][0-9]*}")
-    @Produces(MediaType.APPLICATION_JSON)
+	@Override
     public Member lookupMemberById(@PathParam("id") long id) {
         Member member = repository.findById(id);
         if (member == null) {
@@ -60,13 +50,7 @@ public class MemberResourceRESTService {
         return member;
     }
 
-    /**
-     * Creates a new member from the values provided. Performs validation, and will return a JAX-RS response with either 200 ok,
-     * or with a map of fields, and related errors.
-     */
-    @POST
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
+	@Override
     public Response createMember(Member member) {
 
         Response.ResponseBuilder builder = null;
