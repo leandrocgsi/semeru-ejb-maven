@@ -3,16 +3,18 @@ package br.com.semeru.model.dao;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.persistence.criteria.CriteriaQuery;
+
 public interface InterfaceDAO<T> {
 	
 	void save (T entity);
     void update (T entity);
     void remove (T entity);
-    void merge (T entity);
+    void executeNativeQuery(String stringQuery);
     T getEntity(Serializable id);
-//    T getEntityByDetachedCriteria(DetachedCriteria criteria);
-    T getEntityByHQLQuery(String stringQuery);
+    T getEntityByCriteria(CriteriaQuery<T> criteria);
+    T getEntityByJPQLQuery(String stringQuery);
     List<T> getEntities();
-//    List<T> getListByDetachedCriteria(DetachedCriteria criteria);  
-    List<T> getListByHQLQuery(String stringQuery); 
+    List<T> getListByCriteria(CriteriaQuery<T> criteria);  
+    List<T> getListByJPQLQuery(String stringQuery); 
 }

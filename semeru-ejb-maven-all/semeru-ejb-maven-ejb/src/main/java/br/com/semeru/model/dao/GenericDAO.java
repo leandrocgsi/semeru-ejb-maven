@@ -5,10 +5,8 @@ import java.util.List;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
-import javax.persistence.Query;
-//import org.hibernate.Query;
-//import org.hibernate.Session;
-//import org.hibernate.criterion.DetachedCriteria;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
 
 public class GenericDAO<T> implements InterfaceDAO<T>, Serializable {
 
@@ -17,11 +15,11 @@ public class GenericDAO<T> implements InterfaceDAO<T>, Serializable {
     @Inject
     private EntityManager entityManager;
     
-    private Class<T> classe;
+    private Class<T> clazz;
 
-    public GenericDAO(Class<T> classe) {
+    public GenericDAO(Class<T> clazz) {
         super();
-        this.classe = classe;
+        this.clazz = clazz;
     }
 
     @Override
@@ -39,45 +37,41 @@ public class GenericDAO<T> implements InterfaceDAO<T>, Serializable {
     	entityManager.remove(entity);
     }
 
-    @Override
-    public void merge(T entity) {
-    	entityManager.merge(entity);
-    }
+	public void executeNativeQuery(String stringQuery) {
+		entityManager.createNativeQuery(stringQuery);
+	}
 
     @Override
     public T getEntity(Serializable id) {
-        return entityManager.find(classe, id);
+        return entityManager.find(clazz, id);
     }
 
-//    @Override
-//    public T getEntityByDetachedCriteria(DetachedCriteria criteria) {
-//        T entity = (T) criteria.getExecutableCriteria(session).uniqueResult();
-//        return entity;
-//    }
-
     @Override
-    public T getEntityByHQLQuery(String stringQuery) {
-//        Query query = session.createQuery(stringQuery);
-//        return (T) query.uniqueResult();
-    	return null;
+    public T getEntityByCriteria(CriteriaQuery<T> criteria) {
+    	return (T) entityManager.createQuery(criteria).getSingleResult();
     }
 
-//    @Override
-//    public List<T> getListByDetachedCriteria(DetachedCriteria criteria) {
-//        return criteria.getExecutableCriteria(session).list();
-//    }
+	@Override
+    @SuppressWarnings("unchecked") //REMOVE-ME
+    public T getEntityByJPQLQuery(String stringQuery) {
+    	return (T) entityManager.createQuery(stringQuery).getSingleResult();
+    }
 
     @Override
+    public List<T> getListByCriteria(CriteriaQuery<T> criteria) {
+    	return entityManager.createQuery(criteria).getResultList();
+    }
+
+    @Override
+	@SuppressWarnings("unchecked") //REMOVE-ME
     public List<T> getEntities() {
-//        List<T> enties = (List<T>) session.createCriteria(classe).list();
-//        return enties;
-    	return null;
+    	CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+    	return (List<T>)  builder.createQuery(clazz).getOrderList();
     }
-
-    @Override
-    public List<T> getListByHQLQuery(String stringQuery) {
-        Query query = entityManager.createNamedQuery(stringQuery);
-        return query.getResultList();
-//        CHECK-ME
+    
+	@Override
+	@SuppressWarnings("unchecked") //REMOVE-ME
+    public List<T> getListByJPQLQuery(String stringQuery) {
+        return entityManager.createQuery(stringQuery).getResultList();
     }
 }
