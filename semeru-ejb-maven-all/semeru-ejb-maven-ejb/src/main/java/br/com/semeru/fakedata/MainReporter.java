@@ -28,10 +28,17 @@ public class MainReporter {
 		
 		String currentDirectory = System.getProperty("user.dir");
 		String complementarDirectory = "//src//main//java//br//com//semeru//service//reporter//template//";
-		String finalDirectory = currentDirectory + complementarDirectory + "test_jasper.jrxml";
-		log.info(finalDirectory);
+		String jrxmlPath = currentDirectory + complementarDirectory + "test_jasper.jrxml";
 		
-		InputStream inputStream = new FileInputStream(finalDirectory);
+//		----------------
+		
+	//  URL url = getClass().getClassLoader().getResource("../template/test_jasper.jrxml");
+//		String jrxmlDirectory =  getClass().getClassLoader().getSystemResource("../template/test_jasper.jrxml").getPath();
+		
+//		----------------
+		log.info(jrxmlPath);
+		
+		InputStream inputStream = new FileInputStream(jrxmlPath);
 
 		DataBeanMaker dataBeanMaker = new DataBeanMaker();
 		ArrayList<DataBean> dataBeanList = dataBeanMaker.getDataBeanList();
