@@ -2,6 +2,7 @@ package br.com.semeru.service.reporter;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -30,7 +31,7 @@ public class Reporter {
     @Named
     public File makeReport() throws Exception {
 	
-			String jrxmlDirectory = System.getenv("JASPER_HOME") + "test_jasper.jrxml";
+    		InputStream inputStream = getClass().getResourceAsStream("template/test_jasper.jrxml");
             
             long start = System.currentTimeMillis();
             log.info("Init the export process");
@@ -38,11 +39,13 @@ public class Reporter {
             DataBeanMaker dataBeanMaker = new DataBeanMaker();
             ArrayList<DataBean> dataBeanList = dataBeanMaker.getDataBeanList();
             JRBeanCollectionDataSource beanColDataSource = new JRBeanCollectionDataSource(dataBeanList);
-            Map parameters = new HashMap();
-            JasperReport jasperReport = JasperCompileManager.compileReport(jrxmlDirectory);
+           
+            @SuppressWarnings("rawtypes")
+			Map parameters = new HashMap();
+            JasperReport jasperReport = JasperCompileManager.compileReport(inputStream);
             JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport,parameters, beanColDataSource);
             File pdf = File.createTempFile("output.", ".pdf");
-            JasperExportManager.exportReportToPdfStream(jasperPrint, new FileOutputStream(pdf));// exportReportToPdfFile(jasperPrint,"C:/Users/LEANDRO/Desktop/test_jasper.pdf");
+            JasperExportManager.exportReportToPdfStream(jasperPrint, new FileOutputStream(pdf));
             log.info("Export process finished with " + calculateTime(start));
             return pdf;
     }
