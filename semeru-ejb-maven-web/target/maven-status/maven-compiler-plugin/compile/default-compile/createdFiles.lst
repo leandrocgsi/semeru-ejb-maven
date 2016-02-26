@@ -1,0 +1,7 @@
+br\com\semeru\rest\interfaces\IReportRESTService.class
+br\com\semeru\controller\MemberController.class
+br\com\semeru\rest\interfaces\IMemberRESTService.class
+br\com\semeru\rest\implementations\MemberRESTService.class
+br\com\semeru\rest\implementations\ReportRESTService.class
+br\com\semeru\rest\JaxRsActivator.class
+br\com\semeru\util\WebResources.class

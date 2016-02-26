@@ -1,0 +1,12 @@
+br\com\semeru\fakedata\DataBean.class
+br\com\semeru\service\reporter\Reporter.class
+br\com\semeru\fakedata\MainReporter.class
+br\com\semeru\data\MemberListProducer.class
+br\com\semeru\model\dao\GenericDAO.class
+br\com\semeru\fakedata\DataBeanMaker.class
+br\com\semeru\util\Resources.class
+br\com\semeru\data\MemberRepository.class
+br\com\semeru\model\Member.class
+br\com\semeru\service\ReportService.class
+br\com\semeru\service\MemberRegistration.class
+br\com\semeru\model\dao\InterfaceDAO.class
