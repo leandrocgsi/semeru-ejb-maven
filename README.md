@@ -1,9 +1,8 @@
 ejb-example: Example Using Multiple Java EE 6 Technologies Deployed as an EAR
 ==============================================================================================
+[![Build Status](https://travis-ci.org/leandrocgsi/semeru-ejb-maven.svg?branch=master)](https://travis-ci.org/leandrocgsi/semeru-ejb-maven)
 
-image::https://travis-ci.org/leandrocgsi/semeru-ejb-maven.svg?branch=master[Build Status, link=https://travis-ci.org/leandrocgsi/semeru-ejb-maven/]
-
-Author: Leandro da Costa Gonï¿½alves
+Author: Leandro da Costa Gonçalves
 Level: Intermediate
 Technologies: EAR
 Summary: Based on JBoss-EAP-Quickstart archetypes.
