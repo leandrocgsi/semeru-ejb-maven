@@ -7,22 +7,36 @@ import java.util.Map;
 import java.util.Set;
 import java.util.logging.Logger;
 
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.persistence.NoResultException;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 import javax.validation.ValidationException;
 import javax.validation.Validator;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
 import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+
+import com.wordnik.swagger.annotations.Api;
+import com.wordnik.swagger.annotations.ApiOperation;
+import com.wordnik.swagger.annotations.ApiResponse;
+import com.wordnik.swagger.annotations.ApiResponses;
 
 import br.com.semeru.data.MemberRepository;
 import br.com.semeru.model.Member;
-import br.com.semeru.rest.interfaces.IMemberRESTService;
 import br.com.semeru.service.MemberRegistration;
 
-public class MemberRESTService implements IMemberRESTService{
+@Path("/members")
+@RequestScoped
+@Api(value = "/members", description = "Manage app members!")
+public class MemberRESTService {
     
 	@Inject
     private Logger log;
@@ -36,12 +50,21 @@ public class MemberRESTService implements IMemberRESTService{
     @Inject
     MemberRegistration registration;
 
-	@Override
+	public MemberRESTService() {}
+
+	@GET
+    @Produces(MediaType.APPLICATION_JSON)
+	@ApiOperation(value = "Show all members!", notes = "Show all members")
+    @ApiResponses(value = { @ApiResponse(code = 200, message = "OK"), @ApiResponse(code = 500, message = "Houston we have a problem")})
     public List<Member> listAllMembers() {
         return repository.findAllOrderedByName();
     }
 
-	@Override
+	@GET
+    @Path("/{id:[0-9][0-9]*}")
+    @Produces(MediaType.APPLICATION_JSON)
+    @ApiOperation(value = "Show a member by ID!", notes = "Show a member by ID")
+    @ApiResponses(value = { @ApiResponse(code = 200, message = "OK"), @ApiResponse(code = 500, message = "Houston we have a problem")})
     public Member lookupMemberById(@PathParam("id") long id) {
         Member member = repository.findById(id);
         if (member == null) {
@@ -50,7 +73,11 @@ public class MemberRESTService implements IMemberRESTService{
         return member;
     }
 
-	@Override
+	@POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    @ApiOperation(value = "Create a member!", notes = "Create a member")
+    @ApiResponses(value = { @ApiResponse(code = 200, message = "OK"), @ApiResponse(code = 500, message = "Houston we have a problem")})
     public Response createMember(Member member) {
 
         Response.ResponseBuilder builder = null;
